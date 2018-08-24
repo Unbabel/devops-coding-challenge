@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: multivac-settings
+  namespace: default
+data:
+  # TODO: template this file or create a script to generate it
+  # REDIS_HOST=$(kubectl get svc multivac-redis -o jsonpath='{.spec.clusterIP}')
+  settings: |-
+    [default]
+    flask_env = "development"
+    static_url = "/"
+    wtf_csrf_enabled = false
+
+    debug = false
+    testing = false
+    redis_host = "10.23.250.39"
+    redis_port = 6379
+    redis_db_name = "0"
+
+    mongo_username = "multivac"
+    mongo_server = "10.23.253.45"
+    mongo_port = 27017
+    mongo_db_name = "multivac"
+
+    [development]
+    debug = true
+
+    [tesing]
+    mongo_db_name = "multivac_test"
+
+    [production]
+    debug = false
+    testing = false
+  secrets: |-
+    [default]
+    secret_key = "foundation"
+    redis_password = "isaacasimov"
+    mongo_password = "isaacasimov"

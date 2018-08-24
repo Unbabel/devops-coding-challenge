@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: multivac-redis-settings
+  namespace: default
+data:
+  config-file: |-
+    maxmemory 20mb
+    maxmemory-policy allkeys-lru
+    maxmemory-samples 5
+    loglevel notice
+    logfile ""

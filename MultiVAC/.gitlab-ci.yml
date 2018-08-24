@@ -1,0 +1,15 @@
+before_script:
+  - pip install tox
+
+py36:
+  image: python:3.6
+  script:
+    - tox -e py36
+  artifacts:
+    paths:
+      - htmlcov/
+
+pep8:
+  image: python:3.6
+  script:
+    - tox -e pep8

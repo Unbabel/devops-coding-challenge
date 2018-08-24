@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: multivac-worker
+spec:
+  template:
+    spec:
+      containers:
+      - name: multivac-worker
+        image: artmr/multivac-server:0.2
+        args:
+          - 'worker'
+        env:
+        - name: FLASK_ENV
+          value: 'development'
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: multivac-secret
+              key: password
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: multivac-secret
+              key: password
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: multivac-secret
+              key: secret-key 
+        - name: SETTINGS_MODULE_FOR_DYNACONF
+          value: '/etc/multivac/settings.toml,/etc/multivac/.secrets.toml'
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: settings
+          mountPath: /etc/multivac/
+      volumes:
+      - name: settings
+        configMap:
+          name: multivac-settings
+          items:
+          - key: settings
+            path: settings.toml
+          - key: secrets
+            path: .secrets.toml
+      restartPolicy: Never

@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+tox = "*"
+
+[packages]
+pymongo = "*"
+flask = "*"
+redis = "*"
+dynaconf = "*"
+rq = "*"
+flask-script = "*"
+flask-debugtoolbar = "*"
+
+[requires]
+python_version = "3.6"

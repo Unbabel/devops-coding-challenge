@@ -1,0 +1,27 @@
+[default]
+flask_env = "development"
+secret_key = "foundation"
+static_url = "/"
+wtf_csrf_enabled = false
+
+debug = false
+testing = false
+
+redis_host = "127.0.0.1"
+redis_port = 6379
+redis_db_name = "0"
+mongo_username = "multivac"
+
+mongo_server = "127.0.0.1"
+mongo_port = 27017
+mongo_db_name = "multivac"
+
+[development]
+debug = true
+
+[tesing]
+mongo_db_name = "multivac_test"
+
+[production]
+debug = false
+testing = false

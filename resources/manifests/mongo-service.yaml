@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: multivac-mongo
+  labels:
+    app: multivac
+    role: db
+  namespace: default
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    app: multivac
+    role: db

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: multivac-mongo
+  namespace: default
+spec:
+  serviceName: mongo
+  selector:
+    matchLabels:
+      app: multivac
+      role: db
+  template:
+    metadata:
+      labels:
+        app: multivac
+        role: db
+    spec:
+      containers:
+      - name: multivac-mongo
+        image: 'bitnami/mongodb:latest'
+        ports:
+        - containerPort: 27017
+        resources:
+          limits:
+            cpu: '0.2'
+        env:
+        - name: MONGODB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: multivac-secret
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: multivac-secret
+        - name: MONGODB_USERNAME
+          value: multivac
+        - name: MONGODB_DATABASE
+          value: multivac
+        volumeMounts:
+        - name: multivac-mongo
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: multivac-mongo
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "standard"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi

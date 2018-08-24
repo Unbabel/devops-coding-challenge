@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multivac-redis
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: multivac
+      role: cache
+  template:
+    metadata:
+      labels:
+        app: multivac
+        role: cache
+    spec:
+      containers:
+      - name: multivac-redis
+        image: redis:4-alpine3.8
+        command:
+          - "redis-server"
+          - "$(REDIS_CONFIG)"
+          - "--requirepass"
+          - "$(REDIS_PASSWORD)"
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: '0.2'
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: multivac-secret
+        - name: REDIS_CONFIG
+          value: /etc/redis/redis.conf
+        volumeMounts:
+        - name: redis-config
+          mountPath: /etc/redis/
+      volumes:
+      - name: redis-config
+        configMap:
+          name: multivac-redis-settings
+          items:
+          - key: config-file
+            path: redis.conf
