@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+   multivac_server:
+     image: multivac_server:v1
+     restart: always
+     ports:
+       - "5000:5000"
+
+   multivac_worker:
+     image: multivac_worker:v1
+     restart: always
+     ports:
+       - "5001:5001"
+
+   multivac_redis:
+     image: redis
+     restart: always
+     ports:
+       - "6379:6379"
+
+   multivac_mongo:
+     image: aashreys/mongo-auth:latest
+     environment:
+       - AUTH=yes
+       - MONGODB_ADMIN_USER=admin
+       - MONGODB_ADMIN_PASS=adminpass
+       - MONGODB_APPLICATION_DATABASE=multivac
+       - MONGODB_APPLICATION_USER=multivac
+       - MONGODB_APPLICATION_PASS=isaacasimov
+     ports:
+       - "27017:27017"
+
+networks:
+   unbabel_network:
