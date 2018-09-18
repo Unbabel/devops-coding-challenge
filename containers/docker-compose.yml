@@ -20,14 +20,7 @@ services:
        - "6379:6379"
 
    multivac_mongo:
-     image: aashreys/mongo-auth:latest
-     environment:
-       - AUTH=yes
-       - MONGODB_ADMIN_USER=admin
-       - MONGODB_ADMIN_PASS=adminpass
-       - MONGODB_APPLICATION_DATABASE=multivac
-       - MONGODB_APPLICATION_USER=multivac
-       - MONGODB_APPLICATION_PASS=isaacasimov
+     image: multivac_mongo:v1
      ports:
        - "27017:27017"
 
