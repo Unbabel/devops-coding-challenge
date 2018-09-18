@@ -2,7 +2,7 @@
 
 #### MVP (minimum viable product)
 * This is non scalable simple local solution to test the code execution.
-* To scale the workers we just need to add more builds
+* To scale workers we just need to add more builds
   * Define that on compose
   * Create builds with different ports since we are running local
 
@@ -53,4 +53,3 @@ wget --post-data="data=ExampleData" http://0.0.0.0:5000/multivac/data
 
 #### TODO LIST
 * Mongo db is stateless, so we need to add a volume.
-*
