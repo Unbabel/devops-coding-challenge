@@ -10,8 +10,6 @@ output "Instance gitlab Private IPs" {
   value = "${join(" ", google_compute_instance.unbabel_gitlab_instance.*.network_interface.0.address)}"
 }
 
-
-
 output "Instance runner Name" {
   value = "${join(" ", google_compute_instance.unbabel_gitlab_runner.*.name)}"
 }
