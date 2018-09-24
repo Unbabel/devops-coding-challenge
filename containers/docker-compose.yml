@@ -14,7 +14,7 @@ services:
        - "5001:5001"
 
    multivac_redis:
-     image: redis
+     image: redis:latest
      restart: always
      ports:
        - "6379:6379"
