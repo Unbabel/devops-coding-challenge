@@ -1,28 +1,43 @@
 version: '3'
 
 services:
-   multivac_server:
-     image: multivac_server:v1
+   multivac-server:
+     build:
+        context: ./server
+        dockerfile: Dockerfile 
+     image: multivac-server:v1
      restart: always
      ports:
        - "5000:5000"
+     networks:
+       - unbabel_network
 
-   multivac_worker:
-     image: multivac_worker:v1
+   multivac-worker:
+     build:
+        context: ./worker
+        dockerfile: Dockerfile
+     image: multivac-worker:v1
      restart: always
-     ports:
-       - "5001:5001"
+     networks:
+       - unbabel_network
 
-   multivac_redis:
-     image: redis:latest
+   multivac-redis:
+     image: redis:4.0
      restart: always
      ports:
        - "6379:6379"
+     networks:
+       - unbabel_network
 
-   multivac_mongo:
-     image: multivac_mongo:v1
+   multivac-mongo:
+     build:
+        context: ./mongodb
+        dockerfile: Dockerfile
+     image: multivac-mongo:v1
      ports:
        - "27017:27017"
+     networks:
+       - unbabel_network
 
 networks:
-   unbabel_network:
+  unbabel_network:
