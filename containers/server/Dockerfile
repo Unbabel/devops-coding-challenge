@@ -4,7 +4,7 @@ LABEL MAINTAINER="Rui Grafino"
 LABEL PROJECT="DevOps Challenge"
 LABEL ROLE="Server"
 
-COPY MultiVAC/ /server/
+COPY MultiVAC/ /server
 COPY .env /server
 WORKDIR /server
 RUN pip install -r requirements.txt
