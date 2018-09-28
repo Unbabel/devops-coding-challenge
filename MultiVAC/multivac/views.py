@@ -24,7 +24,7 @@ multivac_bp = Blueprint(
 
 @multivac_bp.route("/")
 def homepage():
-    return "Welcome to MultiVAC!"
+    return "Welcome to MultiVAC2!"
 
 
 @multivac_bp.route("/multivac", methods=['GET'])
@@ -47,3 +47,8 @@ def post_multivac():
 
     return Response(response=json.dumps({"response": "MultiVAC updated!"}),
                     status=200, mimetype="application/json")
+
+@multivac_bp.route("/zzz", methods=['GET'])
+def get_zzz():
+    return "LET THERE BE LIGHT!"
+
