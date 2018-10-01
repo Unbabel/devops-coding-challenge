@@ -21,11 +21,9 @@ multivac_bp = Blueprint(
     template_folder="templates"
 )
 
-
 @multivac_bp.route("/")
 def homepage():
-    return "Welcome to MultiVAC2!"
-
+    return "Welcome to MultiVAC!"
 
 @multivac_bp.route("/multivac", methods=['GET'])
 def get_multivac():
@@ -36,7 +34,6 @@ def get_multivac():
     else:
         answer = db.entropy.find_one()['data']
         return answer
-
 
 @multivac_bp.route("/multivac/data", methods=['POST'])
 def post_multivac():
@@ -50,5 +47,4 @@ def post_multivac():
 
 @multivac_bp.route("/zzz", methods=['GET'])
 def get_zzz():
-    return "LET THERE BE LIGHT!"
-
+    return "LET THERE BE LIGHT!!!"
