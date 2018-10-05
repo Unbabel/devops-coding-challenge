@@ -1,0 +1,4 @@
+---
+# vars file for setup_swarm_manager
+
+ip_address: "{{ ansible_eth0.ipv4.address }}"

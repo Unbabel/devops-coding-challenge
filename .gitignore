@@ -1,0 +1,15 @@
+# terraform files
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+
+# mac files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Ansible files
+*.retry
+
+# Custom Hide
+.hide

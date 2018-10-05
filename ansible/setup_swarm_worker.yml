@@ -1,0 +1,6 @@
+---
+- hosts: swarm-worker
+
+  roles:
+    - setup_swarm_worker
+...

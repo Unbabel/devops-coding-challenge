@@ -1,0 +1,7 @@
+---
+- hosts: gitlab
+
+  roles:
+    - setup_docker
+    - setup_gitlab
+...

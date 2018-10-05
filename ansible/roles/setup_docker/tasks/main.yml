@@ -1,0 +1,25 @@
+---
+# tasks file for setup_docker
+
+- name: Add some requirements
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+
+- name: Add the docker-ce repo
+  command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+- name: Install docker-ce
+  yum: 
+    name: docker-ce
+    state: present
+
+- name: Start and enable docker service
+  systemd:
+    state: started
+    enabled: yes
+    name: docker

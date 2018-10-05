@@ -1,0 +1,8 @@
+region = "europe-west1"
+region_zone = "europe-west1-d"
+project_name = "unbabel-2018"
+network = "unbabel-network"
+account_file_path = "../../../credentials/unbabel-0941d1f9a317.json"
+ssh_user = "grafino"
+ssh_pub_key = "/Users/ruigrafino/.ssh/id_rsa.pub"
+gitlab-static = "104.155.35.102"
