@@ -1,0 +1,15 @@
+[gitlab-servers]
+gitlab ansible_host=104.155.35.102 ansible_user=grafino
+runner ansible_host=35.241.196.148 ansible_user=grafino
+
+
+[docker-swarm:children]
+swarm-master
+swarm-slaves	
+
+[swarm-master]
+swarm-1 ansible_host=35.195.129.202 ansible_user=grafino
+
+[swarm-slaves]
+swarm-2 ansible_host=35.187.181.26 ansible_user=grafino
+swarm-3 ansible_host=35.187.100.76 ansible_user=grafino

@@ -1,0 +1,7 @@
+---
+- hosts: runner
+
+  roles:
+    - setup_docker
+    - setup_runner
+...

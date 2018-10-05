@@ -10,3 +10,6 @@
 
 # Ansible files
 *.retry
+
+# Custom Hide
+.hide

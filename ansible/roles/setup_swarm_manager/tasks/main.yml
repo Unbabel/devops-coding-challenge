@@ -1,0 +1,36 @@
+---
+# tasks file for setup_swarm_manager
+  
+  - name: Get ip address
+    debug:
+      msg: "{{ ip_address }}"
+    register: host_ip
+
+  - name: determine swarm status
+    shell: >
+      docker info | egrep '^Swarm: ' | cut -d ' ' -f2
+    register: swarm_status
+
+  - name: print swarm status
+    debug: 
+      msg: "{{ swarm_status.stdout_lines }}"
+
+
+  - name: start swarm
+    shell: docker swarm init --advertise-addr="{{ ip_address }}"
+    when:
+      - "'inactive' in swarm_status.stdout_lines"
+    register: swarm_token
+
+
+  - name: Get swarm worker token
+    shell: docker swarm join-token worker 
+    when:
+      - "'active' in swarm_status.stdout_lines"
+    register: swarm_token
+
+
+  - name: print token
+    debug:
+      msg: "{{ swarm_token.stdout_lines }}"
+

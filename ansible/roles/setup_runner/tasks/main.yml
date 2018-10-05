@@ -1,0 +1,37 @@
+---
+# tasks file for setup_runner
+
+- name: Installs requiered runner packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - curl
+    - policycoreutils-python
+    - postfix
+  register: packs
+
+- name: Start and enable service postfix
+  systemd:
+    name: postfix
+    enabled: yes
+    state: started
+  when: packs is succeeded
+
+- name: Setup firewall rule
+  command: firewall-cmd --permanent --add-service=http
+  register: firewall
+
+- name: Reload firewall after the http rule
+  systemd:
+    name: firewalld
+    state: reloaded
+  when: firewall is succeeded
+
+- name: Downloads runner
+  shell: curl https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh | bash
+  register: runner_download
+
+- name: Installs runner
+  yum:
+    name: gitlab-runner

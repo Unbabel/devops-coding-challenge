@@ -1,0 +1,52 @@
+---
+# tasks file for setup_gitlab
+
+- name: Installs requiered gitlab packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - curl
+    - policycoreutils-python
+    - postfix
+  register: packs
+
+- name: Start and enable service postfix
+  systemd:
+    name: postfix
+    enabled: yes
+    state: started
+  when: packs is succeeded
+
+- name: Setup firewall rule
+  command: firewall-cmd --permanent --add-service=http
+  register: firewall
+  
+- name: Reload firewall after the http rule
+  systemd:
+    name: firewalld
+    state: reloaded
+  when: firewall is succeeded
+
+- name: Downloads gitlab
+  shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | bash
+  register: gitlab_download
+
+- name: Installs gitlab 
+  yum:
+    name: gitlab-ee
+  when: gitlab_download is succeeded
+  register: gitlab_install
+
+- name: configure gitlab url with the dns
+  lineinfile:
+    backup: yes
+    dest: "/etc/gitlab/gitlab.rb"
+    regexp: '^#?external_url'
+    line: 'external_url "http://gitlab.ruigrafino.space/" '
+  when: gitlab_install is succeeded
+  register: gitlab_conf  
+
+- name: Setup gitlab reconfigure
+  command: gitlab-ctl reconfigure
+  when: gitlab_conf is succeeded
